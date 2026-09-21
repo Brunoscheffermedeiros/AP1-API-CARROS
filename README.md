@@ -97,3 +97,4 @@ A collection utilizada para testar a API está localizada na pasta: `bruno`
 
 ## Link para vídeo de demonstração:
 
+[Clique aqui para assistir ao vídeo](https://drive.google.com/file/d/1mFI7RkPs0DpBD74B0D0vCYjDm5mULFEv/view?usp=sharing)
