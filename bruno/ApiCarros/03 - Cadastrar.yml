@@ -8,7 +8,12 @@ http:
   url: "{{baseUrl}}/api/carros"
   body:
     type: json
-    data: ""
+    data: |-
+      {
+        "modelo": "Uno",
+        "ano": 1998,
+        "cor": "Vermelho"
+      }
   auth: inherit
 
 settings:
