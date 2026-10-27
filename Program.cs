@@ -1,5 +1,12 @@
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<ApiDbContext> (options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"))
+);
+builder.Services.AddCors();
 var app = builder.Build();
+app.UseCors(policy => policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
 // ↑ criou a lista
 
@@ -10,16 +17,18 @@ var carros = new List<CarroDto>
     new CarroDto(2, "Gol", 2010, "Preto")
 };
 
-app.MapGet("/", () => "Api dos carros está no ar!");
+app.MapGet("/",() => "Api dos carros está no ar!");
 
-app.MapGet("/api/carros", () =>
+app.MapGet("/api/carros", async (ApiDbContext db) =>
 {
+    var carros = await db.Carros.ToListAsync();
     return Results.Ok(carros);
+
 });
 
-app.MapGet("/api/carros/{id:int}", (int id) =>
+app.MapGet("/api/carros/{id:int}", async (int id, ApiDbContext db) =>
 {
-    var carro = carros.Find(carroDaLista => carroDaLista.Id == id);
+    var carro = await db.Carros.FirstOrDefaultAsync(carroDaLista => carroDaLista.Id == id);
 
     if (carro is null)
     {
@@ -30,45 +39,37 @@ app.MapGet("/api/carros/{id:int}", (int id) =>
 
 });
 
-app.MapPost("/api/carros", (CarroEntradaDto dados) =>
+app.MapPost("/api/carros", async (CarroEntity dados, ApiDbContext db) =>
 {
-    int proximoId = carros.Count + 1;
 
-    var novoCarro = new CarroDto(proximoId, dados.Modelo, dados.Ano, dados.Cor);
-
-    carros.Add(novoCarro);
-
-    return Results.Created($"/api/carros/{novoCarro.Id}", novoCarro);
+    db.Carros.Add(dados);
+    await db.SaveChangesAsync();
+    return Results.Created($"/api/carros/{dados.Id}", dados);
     
 });
 
-app.MapPut("/api/carros/{id:int}", (int id, CarroEntradaDto dados) =>
+app.MapPut("/api/carros/{id:int}", async (int id, CarroEntity dados, ApiDbContext db) =>
 {
-    var indice = carros.FindIndex(carroDaLista => carroDaLista.Id == id);
+    var carro = await db.Carros.FindAsync(id);
 
-    if (indice == -1)
+    if (carro is null)
     {
         return Results.NotFound();
     }
-
-    var carroAtualizado = new CarroDto(id, dados.Modelo, dados.Ano, dados.Cor);
-
-    carros[indice] = carroAtualizado;
-
-    return Results.Ok(carroAtualizado);
-
+    carro.Ano = dados.Ano;
+    carro.Modelo = dados.Modelo;
+    carro.Cor = dados.Cor;
+    await db.SaveChangesAsync();
+    return Results.Ok(carro);
+    
 });
 
-app.MapDelete("/api/carros/{id:int}", (int id) =>
+app.MapDelete("/api/carros/{id:int}", async (int id, ApiDbContext db) =>
 {
-    var indice = carros.FindIndex(carroDaLista => carroDaLista.Id == id);
-
-    if (indice == -1)
-    {
-        return Results.NotFound();
-    }
-    
-    carros.RemoveAt(indice);
+    var carro = await db.Carros.FindAsync(id);
+    if (carro is null) return Results.NotFound();
+    db.Carros.Remove(carro);
+    await db.SaveChangesAsync();
     return Results.NoContent();
 });
 
@@ -77,3 +78,20 @@ app.Run();
 
 record CarroDto(int Id, string Modelo, int Ano, string Cor);
 record CarroEntradaDto(string Modelo, int Ano, string Cor);
+
+class CarroEntity
+{
+    public int Id { get; set; }
+    public string Modelo { get; set; }
+    public int Ano { get; set; }
+    public string Cor { get; set; }
+}
+
+class ApiDbContext : DbContext
+{
+    public ApiDbContext(DbContextOptions <ApiDbContext> options) : base(options)
+    {
+        
+    }
+    public DbSet<CarroEntity> Carros => Set<CarroEntity> ();
+}

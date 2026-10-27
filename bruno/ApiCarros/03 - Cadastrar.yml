@@ -10,9 +10,9 @@ http:
     type: json
     data: |-
       {
-        "modelo": "Uno",
-        "ano": 1998,
-        "cor": "Vermelho"
+        "modelo": "Gol",
+        "ano": 2000,
+        "cor": "Preto"
       }
   auth: inherit
 

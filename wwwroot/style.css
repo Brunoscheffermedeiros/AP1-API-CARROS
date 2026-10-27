@@ -1,0 +1,407 @@
+/* ==========================================================================
+   Estilização Pura da Interface - Integração com API REST
+   Projeto: ApiCarros
+   ========================================================================== */
+
+:root {
+    --cor-fundo: #f4f6f9;
+    --cor-superficie: #ffffff;
+    --cor-primaria: #1e3a8a;
+    --cor-primaria-hover: #172554;
+    --cor-secundaria: #475569;
+    --cor-secundaria-hover: #334155;
+    --cor-perigo: #dc2626;
+    --cor-perigo-hover: #b91c1c;
+    --cor-edicao: #d97706;
+    --cor-edicao-hover: #b45309;
+    --cor-sucesso-fundo: #ecfdf5;
+    --cor-sucesso-borda: #a7f3d0;
+    --cor-sucesso-texto: #065f46;
+    --cor-erro-fundo: #fef2f2;
+    --cor-erro-borda: #fecaca;
+    --cor-erro-texto: #991b1b;
+    --cor-texto-principal: #1e293b;
+    --cor-texto-suave: #64748b;
+    --cor-borda: #e2e8f0;
+    --cor-borda-foco: #3b82f6;
+    --raio-borda: 8px;
+    --sombra-card: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto-principal);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+.header {
+    background-color: var(--cor-primaria);
+    color: #ffffff;
+    padding: 1.5rem 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header-container {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.header h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+
+.header .subtitle {
+    font-size: 0.95rem;
+    color: #cbd5e1;
+    margin-top: 0.25rem;
+}
+
+/* Container Principal */
+.main-container {
+    max-width: 1100px;
+    width: 100%;
+    margin: 1.5rem auto;
+    padding: 0 1rem;
+    flex: 1;
+}
+
+/* Layout em Grid */
+.grid-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: 1.5rem;
+}
+
+@media (max-width: 860px) {
+    .grid-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Cards */
+.card {
+    background-color: var(--cor-superficie);
+    border-radius: var(--raio-borda);
+    border: 1px solid var(--cor-borda);
+    box-shadow: var(--sombra-card);
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.2s ease;
+}
+
+.card.modo-edicao-ativo {
+    border-color: var(--cor-edicao);
+    box-shadow: 0 0 0 2px rgba(217, 119, 6, 0.2);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--cor-borda);
+    background-color: #f8fafc;
+    border-top-left-radius: var(--raio-borda);
+    border-top-right-radius: var(--raio-borda);
+}
+
+.header-title-group {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.card-header h2 {
+    font-size: 1.15rem;
+    color: var(--cor-texto-principal);
+    font-weight: 600;
+}
+
+.card-body {
+    padding: 1.25rem;
+}
+
+/* Badges */
+.badge {
+    display: inline-block;
+    padding: 0.25rem 0.6rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 9999px;
+    text-transform: uppercase;
+}
+
+.badge-create {
+    background-color: #dbeafe;
+    color: #1e40af;
+}
+
+.badge-edit {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.badge-info {
+    background-color: #e0f2fe;
+    color: #0369a1;
+}
+
+.badge-row-id {
+    display: inline-block;
+    padding: 0.15rem 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background-color: #f1f5f9;
+    color: #475569;
+    border-radius: 4px;
+}
+
+/* Formulário */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #334155;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    font-size: 0.95rem;
+    border: 1px solid var(--cor-borda);
+    border-radius: 6px;
+    background-color: #ffffff;
+    color: var(--cor-texto-principal);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--cor-borda-foco);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.25rem;
+}
+
+/* Botões */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.15s ease, transform 0.05s ease;
+}
+
+.btn:active:not(:disabled) {
+    transform: scale(0.98);
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.btn-primary {
+    background-color: var(--cor-primaria);
+    color: #ffffff;
+    flex: 1;
+}
+
+.btn-primary:hover:not(:disabled) {
+    background-color: var(--cor-primaria-hover);
+}
+
+.btn-secondary {
+    background-color: var(--cor-secundaria);
+    color: #ffffff;
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background-color: var(--cor-secundaria-hover);
+}
+
+.btn-outline {
+    background-color: transparent;
+    border: 1px solid var(--cor-borda);
+    color: var(--cor-secundaria);
+}
+
+.btn-outline:hover:not(:disabled) {
+    background-color: #f1f5f9;
+}
+
+.btn-sm {
+    padding: 0.35rem 0.75rem;
+    font-size: 0.8rem;
+}
+
+.btn-group-actions {
+    display: flex;
+    gap: 0.4rem;
+}
+
+.btn-edit-sm {
+    background-color: #fef3c7;
+    color: #92400e;
+    padding: 0.35rem 0.65rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: 4px;
+    border: 1px solid #fde68a;
+    cursor: pointer;
+}
+
+.btn-edit-sm:hover:not(:disabled) {
+    background-color: #fde68a;
+}
+
+.btn-danger-sm {
+    background-color: #fee2e2;
+    color: var(--cor-perigo);
+    padding: 0.35rem 0.65rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: 4px;
+    border: 1px solid #fecaca;
+    cursor: pointer;
+}
+
+.btn-danger-sm:hover:not(:disabled) {
+    background-color: var(--cor-perigo);
+    color: #ffffff;
+}
+
+/* Linha em edição na tabela */
+tr.linha-em-edicao {
+    background-color: #fffbeb !important;
+}
+
+/* Mensagens de Feedback */
+.feedback-container {
+    margin-top: 1rem;
+    min-height: 24px;
+}
+
+.feedback-msg {
+    padding: 0.65rem 0.85rem;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    line-height: 1.4;
+}
+
+.feedback-success {
+    background-color: var(--cor-sucesso-fundo);
+    border: 1px solid var(--cor-sucesso-borda);
+    color: var(--cor-sucesso-texto);
+}
+
+.feedback-error {
+    background-color: var(--cor-erro-fundo);
+    border: 1px solid var(--cor-erro-borda);
+    color: var(--cor-erro-texto);
+}
+
+/* Indicador de Carregamento (Spinner puro em CSS) */
+.loading-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+    gap: 0.75rem;
+    color: var(--cor-texto-suave);
+    font-size: 0.9rem;
+}
+
+.spinner {
+    width: 28px;
+    height: 28px;
+    border: 3px solid #e2e8f0;
+    border-top: 3px solid var(--cor-primaria);
+    border-radius: 50%;
+    animation: girar 0.8s linear infinite;
+}
+
+@keyframes girar {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Tabela de Dados */
+.table-responsive {
+    overflow-x: auto;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    text-align: left;
+}
+
+.data-table th,
+.data-table td {
+    padding: 0.75rem 0.85rem;
+    border-bottom: 1px solid var(--cor-borda);
+}
+
+.data-table th {
+    background-color: #f8fafc;
+    color: #475569;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+}
+
+.data-table tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 2.5rem 1rem;
+    color: var(--cor-texto-suave);
+}
+
+.empty-state p {
+    font-size: 0.95rem;
+}
+
+/* Rodapé */
+.footer {
+    text-align: center;
+    padding: 1.5rem 1rem;
+    color: var(--cor-texto-suave);
+    font-size: 0.8rem;
+    border-top: 1px solid var(--cor-borda);
+    background-color: #ffffff;
+    margin-top: auto;
+}

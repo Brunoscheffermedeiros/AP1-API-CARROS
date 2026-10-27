@@ -98,3 +98,19 @@ A collection utilizada para testar a API está localizada na pasta: `bruno`
 ## Link para vídeo de demonstração:
 
 [Clique aqui para assistir ao vídeo](https://drive.google.com/file/d/1mFI7RkPs0DpBD74B0D0vCYjDm5mULFEv/view?usp=sharing)
+
+# Atualização API Carros
+
+Projeto de API ASP.NET Core (.NET 10) integrada com Frontend HTML/JS/CSS e banco SQLite utilizando Entity Framework Core.
+
+## Visão Geral do Projeto
+
+O sistema permite gerir um cadastro de veículos através de operações completas de CRUD. 
+
+* **Backend:** ASP.NET Core com Entity Framework Core e SQLite.
+* **Frontend:** Interface Web servida na mesma origem da API (`wwwroot`).
+* **Persistência:** Todos os dados alterados na interface ou via API ficam gravados no banco de dados local `api-carros.db`.
+
+## Link para vídeo de demonstração do projeto atualizado:
+
+[Clique aqui para assistir ao vídeo]()

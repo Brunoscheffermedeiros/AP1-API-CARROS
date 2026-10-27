@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciamento de Carros — API REST</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <h1>Gerenciamento de Carros</h1>
+            <p class="subtitle">Interface conectada à API REST da AP1</p>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <div class="grid-layout">
+            <!-- Formulário de Cadastro e Edição -->
+            <section class="card" id="card-formulario">
+                <div class="card-header">
+                    <h2 id="form-titulo">Cadastrar Novo Carro</h2>
+                    <span id="badge-modo" class="badge badge-create">Criação</span>
+                </div>
+                <div class="card-body">
+                    <form id="form-carro" novalidate>
+                        <!-- Campo oculto para armazenar o ID durante a edição -->
+                        <input type="hidden" id="carro-id" name="id" value="">
+
+                        <div class="form-group">
+                            <label for="campo-modelo">Modelo:</label>
+                            <input 
+                                type="text" 
+                                id="campo-modelo" 
+                                name="modelo" 
+                                placeholder="Ex.: Gol" 
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="campo-ano">Ano de Fabricação:</label>
+                            <input 
+                                type="number" 
+                                id="campo-ano" 
+                                name="ano" 
+                                placeholder="Ex.: 2010" 
+                                min="1900" 
+                                max="2100" 
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="campo-cor">Cor:</label>
+                            <input 
+                                type="text" 
+                                id="campo-cor" 
+                                name="cor" 
+                                placeholder="Ex.: Preto" 
+                                required
+                            >
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" id="btn-salvar" class="btn btn-primary">Cadastrar</button>
+                            <button type="button" id="btn-cancelar" class="btn btn-secondary" style="display: none;">Cancelar Edição</button>
+                            <button type="button" id="btn-limpar" class="btn btn-outline">Limpar</button>
+                        </div>
+
+                        <div id="mensagem-feedback" class="feedback-container" aria-live="polite"></div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Tabela de Carros da API -->
+            <section class="card">
+                <div class="card-header">
+                    <div class="header-title-group">
+                        <h2>Carros Cadastrados</h2>
+                        <span id="contador-carros" class="badge badge-info">0 registros</span>
+                    </div>
+                    <button type="button" id="btn-recarregar" class="btn btn-sm btn-outline" title="Recarregar dados da API">
+                        ↻ Recarregar
+                    </button>
+                </div>
+                <div class="card-body">
+                    <!-- Estado de Carregamento -->
+                    <div id="indicador-carregando" class="loading-state" style="display: none;">
+                        <div class="spinner"></div>
+                        <p id="texto-carregando">Consultando API de carros...</p>
+                    </div>
+
+                    <!-- Mensagem de Erro de Comunicação -->
+                    <div id="erro-conexao" class="feedback-msg feedback-error" style="display: none; margin-bottom: 1rem;">
+                        <strong id="erro-conexao-titulo">Falha na comunicação com a API</strong>
+                        <p id="erro-conexao-detalhe"></p>
+                    </div>
+
+                    <!-- Tabela de Dados -->
+                    <div class="table-responsive">
+                        <table class="data-table" id="tabela-carros">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Modelo</th>
+                                    <th>Ano</th>
+                                    <th>Cor</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabela-corpo">
+                                <!-- Linhas criadas via document.createElement e textContent no JS -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Estado de Lista Vazia -->
+                    <div id="lista-vazia" class="empty-state" style="display: none;">
+                        <p>Nenhum carro cadastrado no banco de dados.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>Interface conectada à API REST de Carros — Operações via Fetch API nativa (sem dependências externas).</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
