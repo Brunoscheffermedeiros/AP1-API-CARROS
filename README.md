@@ -1,3 +1,51 @@
+# Atualização API Carros (AP2)
+
+Projeto de API ASP.NET Core (.NET 10) integrada com Frontend HTML/JS/CSS e banco SQLite utilizando Entity Framework Core.
+
+## Visão Geral do Projeto
+
+O sistema permite gerir um cadastro de veículos através de operações completas de CRUD. 
+
+* **Backend:** ASP.NET Core com Entity Framework Core e SQLite.
+* **Frontend:** Interface Web servida na mesma origem da API (`wwwroot`).
+* **Persistência:** Todos os dados alterados na interface ou via API ficam gravados no banco de dados local `api-carros.db`.
+
+### 🚀 Como Executar o Projeto
+
+1. **Restaurar dependências e aplicar Migrations (Criar o Banco):**
+    ```bash
+    dotnet ef database update
+    ```
+   
+
+2. **Executar a API (Backend):**
+    ```bash
+   dotnet run
+   ```
+
+3. **Executar a Interface Web (Frontend):**
+   - Abra o arquivo `index.html`, que está em `wwwroot`  no VS Code.
+   - Inicie o servidor local através da extensão **Live Server** (Go Live).
+
+### Endpoints
+
+| Método | Rota | Descrição | Status Esperado |
+| :--- | :--- | :--- | :--- |
+| **GET** | `/api/carros` | Lista todos os carros | `200 OK` |
+| **GET** | `/api/carros/{id}` | Busca um carro pelo ID | `200 OK` / `404 Not Found` |
+| **POST** | `/api/carros` | Cadastra um novo carro | `201 Created` |
+| **PUT** | `/api/carros/{id}` | Atualiza um carro existente | `200 OK` / `404 Not Found` |
+| **DELETE** | `/api/carros/{id}` | Remove um carro | `204 No Content` / `404 Not Found` |
+
+## Link para vídeo de demonstração do projeto atualizado:
+
+[Clique aqui para assistir ao vídeo](https://drive.google.com/file/d/1SQTzetW1fA-JDg73XEt6d9bVrqVxPNZg/view?usp=sharing)
+
+## 📜 Histórico - AP1 (Dados salvos em memória local)
+
+<details>
+<summary>Clique para expandir a documentação da AP1</summary>
+
 # API Carros
 
 API REST minimalista para gerenciamento de carros, desenvolvida com ASP.NET Core e .NET 10.
@@ -98,19 +146,3 @@ A collection utilizada para testar a API está localizada na pasta: `bruno`
 ## Link para vídeo de demonstração:
 
 [Clique aqui para assistir ao vídeo](https://drive.google.com/file/d/1mFI7RkPs0DpBD74B0D0vCYjDm5mULFEv/view?usp=sharing)
-
-# Atualização API Carros
-
-Projeto de API ASP.NET Core (.NET 10) integrada com Frontend HTML/JS/CSS e banco SQLite utilizando Entity Framework Core.
-
-## Visão Geral do Projeto
-
-O sistema permite gerir um cadastro de veículos através de operações completas de CRUD. 
-
-* **Backend:** ASP.NET Core com Entity Framework Core e SQLite.
-* **Frontend:** Interface Web servida na mesma origem da API (`wwwroot`).
-* **Persistência:** Todos os dados alterados na interface ou via API ficam gravados no banco de dados local `api-carros.db`.
-
-## Link para vídeo de demonstração do projeto atualizado:
-
-[Clique aqui para assistir ao vídeo]()
