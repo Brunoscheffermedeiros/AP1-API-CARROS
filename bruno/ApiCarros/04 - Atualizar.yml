@@ -5,14 +5,14 @@ info:
 
 http:
   method: PUT
-  url: "{{baseUrl}}/api/carros/3"
+  url: "{{baseUrl}}/api/carros/8"
   body:
     type: json
     data: |-
       {
-        "modelo": "uno",
+        "modelo": "gol",
         "ano": 2000,
-        "cor": "Amarelo"
+        "cor": "verde"
       }
   auth: inherit
 

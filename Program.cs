@@ -1,3 +1,7 @@
+using ApiCarros.Models;
+using ApiCarros.Dtos;
+using ApiCarros.Data;
+
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +13,16 @@ var app = builder.Build();
 app.UseCors(policy => policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
 // ↑ criou a lista
+
+app.UseExceptionHandler(errorApp =>
+{
+    errorApp.Run(async context =>
+    {
+        context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+        context.Response.ContentType = "application/json";
+        await context.Response.WriteAsJsonAsync(new { mensagem = "Ocorreu um erro interno no servidor." });
+    });
+});
 
 
 var carros = new List<CarroDto>
@@ -73,25 +87,10 @@ app.MapDelete("/api/carros/{id:int}", async (int id, ApiDbContext db) =>
     return Results.NoContent();
 });
 
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<ApiDbContext>();
+    dbContext.Database.Migrate();
+}
+
 app.Run();
-
-
-record CarroDto(int Id, string Modelo, int Ano, string Cor);
-record CarroEntradaDto(string Modelo, int Ano, string Cor);
-
-class CarroEntity
-{
-    public int Id { get; set; }
-    public string Modelo { get; set; }
-    public int Ano { get; set; }
-    public string Cor { get; set; }
-}
-
-class ApiDbContext : DbContext
-{
-    public ApiDbContext(DbContextOptions <ApiDbContext> options) : base(options)
-    {
-        
-    }
-    public DbSet<CarroEntity> Carros => Set<CarroEntity> ();
-}
